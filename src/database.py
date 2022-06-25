@@ -7,8 +7,6 @@ from datetime import datetime
 from sqlalchemy.dialects.postgresql import UUID
 
 engine=create_engine(setting.database_url)
-
-
 Session = sessionmaker(engine)
 Base = declarative_base()
 
