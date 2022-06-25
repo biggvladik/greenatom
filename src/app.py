@@ -11,7 +11,7 @@ from datetime import datetime,date
 from models import pictures_in
 app= FastAPI()
 @app.get("/frames/{file_uuid}", response_model=picture_get)
-def get_picture(file_uuid,session: Session = Depends(get_session)):
+def get_picture(file_uuid:str,session: Session = Depends(get_session)):
     pictures = (
         session
             .query(Inbox.name, Inbox.created_on)
@@ -38,7 +38,7 @@ def save_file(files: List[UploadFile],session: Session = Depends(get_session)):
             code_id = str(uuid.uuid4())
         )
         session.add(x)
-        session.commit()
+
 
         code = dict((
             session
@@ -51,5 +51,21 @@ def save_file(files: List[UploadFile],session: Session = Depends(get_session)):
         Data.client.fput_object(str(date.today()),code_new,file.filename)
         os.remove(file.filename)
         filesname.names.append(file.filename)
+    session.commit()
     return filesname
 
+@app.delete("/frames{file_uuid}")
+def delete_pictures(file_uuid:str,session: Session = Depends(get_session)):
+    date = dict((
+        session
+            .query(Inbox.created_on)
+            .filter(Inbox.code_id == file_uuid)
+            .first()
+
+    ))
+    date_new = date['created_on']
+    bucket = str(date_new)[:10]
+    i = session.query(Inbox).filter(Inbox.code_id == file_uuid).one()
+    session.delete(i)
+    session.commit()
+    Data.client.remove_object(bucket, file_uuid)
