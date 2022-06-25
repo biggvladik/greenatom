@@ -15,4 +15,4 @@ class Data_minio:
 
 Data = Data_minio()
 
-Data.client.fput_object(str(date.today()), "qwerty", 'models.py')
+

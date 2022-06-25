@@ -14,7 +14,7 @@ Base = declarative_base()
 
 class Inbox(Base):
     __tablename__ = 'inbox'
-    code_id = Column(UUID(), primary_key=True,default = uuid.uuid4)
+    code_id = Column(UUID(), primary_key=True)
     name = Column(String(100), nullable=False)
     created_on = Column(Date(), default=datetime.now)
 
