@@ -1,4 +1,3 @@
-
 from minio import Minio
 from settings import setting
 from datetime import date

@@ -17,7 +17,7 @@ def get_picture(file_uuid:str,service: Crud = Depends(Crud)):
 
 
 
-@app.post("/frames")
+@app.post("/frames/")
 def save_file(files: List[UploadFile],service: Crud = Depends(Crud)):
     filesname= pictures_in()
     if Data.client.bucket_exists(str(date.today())):
@@ -40,9 +40,13 @@ def save_file(files: List[UploadFile],service: Crud = Depends(Crud)):
 
 
 
-@app.delete("/frames{file_uuid}")
+@app.delete("/frames/{file_uuid}")
 def delete_pictures(file_uuid:str,service: Crud = Depends(Crud)):
 
     bucket = service.get_bucket(file_uuid)
     service.delete_picture(file_uuid)
     Data.delete_picture(bucket,file_uuid)
+
+    return {}
+
+

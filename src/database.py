@@ -5,8 +5,8 @@ from sqlalchemy.orm import  sessionmaker
 from settings import setting
 from datetime import datetime
 from sqlalchemy.dialects.postgresql import UUID
-
-engine=create_engine(setting.database_url)
+database_url = f"postgresql+psycopg2://postgres:{setting.database_password}@localhost/{setting.database_name}"
+engine=create_engine(database_url)
 Session = sessionmaker(engine)
 Base = declarative_base()
 

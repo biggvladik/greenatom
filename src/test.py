@@ -1,4 +1,3 @@
-
 from fastapi.testclient import TestClient
 from app import app
 from database import Inbox
@@ -14,9 +13,9 @@ client = TestClient(app)
 def test_get_picture():
     session = Session(bind=create_engine(setting.database_url))
 
-    random_uuid = session.query(Inbox.name, Inbox.code_id, Inbox.created_on).first()
+    picture = session.query(Inbox.name, Inbox.code_id, Inbox.created_on).first()
 
-    res = test_picture.parse_obj(random_uuid)
+    res = test_picture.parse_obj(picture)
 
     random_uuid = res.code_id
     results = {
@@ -26,4 +25,29 @@ def test_get_picture():
     response = client.get(f"/frames/{random_uuid}")
     assert response.status_code == 200
     assert response.json() == results
+
+
+
+def test_delete_picture():
+    session = Session(bind=create_engine(setting.database_url))
+
+    picture = session.query(Inbox.name, Inbox.code_id, Inbox.created_on).first()
+    res = test_picture.parse_obj(picture)
+
+    random_uuid = res.code_id
+
+    response = client.delete(
+        f"/frames/{random_uuid}"
+    )
+
+    delete_picture = session.query(Inbox.name, Inbox.code_id, Inbox.created_on).filter(Inbox.code_id == random_uuid).all()
+
+    assert response.status_code == 200
+    assert delete_picture == []
+    assert response.json() == {}
+
+# post не получилось затестить ( не понял как писать для UploadFile тесты )
+
+
+
 
