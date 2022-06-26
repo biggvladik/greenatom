@@ -13,5 +13,6 @@
 # Installation
 - install requirements
 - change settings.py
+- run database.py
 - uvicorn app:app --reload
  
