@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine,String,Date,Column
+from sqlalchemy import create_engine,String,DateTime,Column
 import uuid
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import  sessionmaker
@@ -12,9 +12,9 @@ Base = declarative_base()
 
 class Inbox(Base):
     __tablename__ = 'inbox'
-    code_id = Column(UUID(), primary_key=True)
+    code_id = Column(String(100), primary_key=True)
     name = Column(String(100), nullable=False)
-    created_on = Column(Date(), default=datetime.now)
+    created_on = Column(DateTime(), default=datetime.now)
 
 Base.metadata.create_all(engine)
 

@@ -53,6 +53,16 @@ class Crud:
         self.session.commit()
 
 
+    def take_random_uuid(self):
+        code = dict((
+                self.session
+                .query(Inbox.code_id)
+                .first()
+        ))
+
+        return code['code_id']
+
+
 
 
 
