@@ -12,7 +12,7 @@ app= FastAPI()
 
 
 @app.get("/frames/{file_uuid}", response_model=picture_get)
-def get_picture(file_uuid:str,service: Crud = Depends(Crud)):
+async def get_picture(file_uuid:str,service: Crud = Depends(Crud)):
     pictures = service.get_pictures(file_uuid)
     if not pictures:
         raise HTTPException(status_code=404, detail="Item not found")
@@ -21,7 +21,7 @@ def get_picture(file_uuid:str,service: Crud = Depends(Crud)):
 
 
 @app.post("/frames/")
-def save_file(files: List[UploadFile],service: Crud = Depends(Crud)):
+async def save_file(files: List[UploadFile],service: Crud = Depends(Crud)):
     filesname= pictures_in()
     if Data.client.bucket_exists(str(date.today())):
         pass
@@ -44,7 +44,7 @@ def save_file(files: List[UploadFile],service: Crud = Depends(Crud)):
 
 
 @app.delete("/frames/{file_uuid}")
-def delete_pictures(file_uuid:str,service: Crud = Depends(Crud)):
+async def delete_pictures(file_uuid:str,service: Crud = Depends(Crud)):
 
     bucket = service.get_bucket(file_uuid)
     service.delete_picture(file_uuid)
