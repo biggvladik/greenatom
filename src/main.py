@@ -2,17 +2,20 @@ import shutil
 import os
 from CRUD import Crud
 from minio_data import Data
-from fastapi import FastAPI,Depends,UploadFile
+from fastapi import FastAPI,Depends,UploadFile,status,HTTPException
 from typing import List
-
 from datetime import datetime,date
 from schemas import pictures_in
 from schemas import picture_get
 app= FastAPI()
 
+
+
 @app.get("/frames/{file_uuid}", response_model=picture_get)
 def get_picture(file_uuid:str,service: Crud = Depends(Crud)):
     pictures = service.get_pictures(file_uuid)
+    if not pictures:
+        raise HTTPException(status_code=404, detail="Item not found")
     return pictures
 
 

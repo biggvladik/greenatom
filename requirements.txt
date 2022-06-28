@@ -7,3 +7,4 @@ python-multipart
 minio
 pytest
 requests
+sqlalchemy-utils
