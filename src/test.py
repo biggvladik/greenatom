@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 from schemas import test_picture
 
 
+# add TestDatabase
 
 client = TestClient(app)
 
@@ -52,7 +53,7 @@ def test_delete_picture():
     session.add(old_picture)
     session.commit()
 
-# post не получилось затестить ( не понял как писать для UploadFile тесты )
+
 
 
 
