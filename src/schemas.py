@@ -20,5 +20,23 @@ class test_picture(picture_get):
         orm_mode = True
 
 
+class User(BaseModel):
+    username: str
+    hash_password: str
+
+    class Config:
+        orm_mode = True
+
+class UserIn(BaseModel):
+    username: str
+    password : str
 
 
+
+class UserBD(BaseModel):
+    id: int
+    username: str
+    hash_password: str
+
+    class Config:
+        orm_mode = True

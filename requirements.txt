@@ -8,3 +8,6 @@ minio
 pytest
 requests
 sqlalchemy-utils
+bcrypt
+passlib
+pyjwt

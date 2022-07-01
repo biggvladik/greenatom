@@ -1,8 +1,10 @@
 from database import get_session
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from database import Inbox
+from database import Inbox,Users
 import uuid
+from schemas import UserBD
+import passlib.hash
 
 
 class Crud:
@@ -65,6 +67,32 @@ class Crud:
         return code['code_id']
 
 
+    def insert_users(self, username, hash_password):
+        user = Users(
+            username=username,
+            hash_password=hash_password
+        )
+        self.session.add(user)
+        self.session.commit()
+
+
+
+    def authenticate_user(self,username: str, password: str):
+        user = (
+            self.session
+            .query(Users)
+            .filter(Users.username == username)
+            .first() )
+
+        q = UserBD.from_orm(user)
+
+        if not user:
+            return 'False'
+
+        if not passlib.hash.bcrypt.verify(password,user.hash_password):
+            return False
+
+        return q
 
 
 

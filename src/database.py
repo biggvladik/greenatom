@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine,String,DateTime,Column
+from sqlalchemy import create_engine,String,DateTime,Column,Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import  sessionmaker
 from settings import setting
@@ -20,6 +20,15 @@ class Inbox(Base):
     code_id = Column(String(100), primary_key=True)
     name = Column(String(100), nullable=False)
     created_on = Column(DateTime(), default=datetime.now)
+
+
+
+class Users(Base):
+    __tablename__ = 'Users'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(100), nullable=False)
+    hash_password = Column(String(150), nullable=False)
+
 
 
 
