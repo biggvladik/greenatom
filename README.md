@@ -5,6 +5,7 @@
   - delete /frames{file_uuid} - удаляем файлы из minio и БД по UUID
   - post /token - создаем JWT token
   -post /users - регистрируем нового пользователя и добавляем его в БД
+  
 
       ![image](https://user-images.githubusercontent.com/65870349/176893442-ee46bb78-d7ad-428b-a036-3283cfc930ee.png)
 
